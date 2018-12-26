@@ -4,54 +4,19 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- <style>
-            #div1 {
-                float: left;
-                width: 170px;
-                height: 104px;
-                margin: 10px;
-                padding: 10px;
-                border: 1px solid #aaaaaa;
-            }
-
-            .unlisted img {
-                width: 150px;
-                height: 84px;
-                cursor: move;
-            }
-
-            .listed img {
-                width: 300px;
-                height: 168px;
-                cursor: move;
-            }
-        </style> -->
-        
     </head>
 
     <body>
         <div class="container">
             <div class="row">
                 <div class="col s12">
-                    <h2 class="center-align">Hottest Top 10 2018 Anime List Maker</h2>
+                    <div class="center-align">
+                        <h2>Hottest Top 10 2018 Anime List Maker</h2>
+                        <input type="button" value="Gen Link" onclick="fuggggme()" /><input id="linkplace" type="text" /> 
+                    </div>
+                    
                     <div class="divider"></div>
                     <div class="section">
-                        <!-- <div class="row">
-                                <div class="col s6">
-                                    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" class="unlisted">
-                                        <img id="drag1" src="slime.jpg" draggable="true" ondragstart="drag(event)">
-                                    </div>
-                                </div>
-                                <div class="col s6">
-                                    <ul class="collection">
-                                        <li class="collection-item" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
-                                        <li class="collection-item" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
-                                        <li class="collection-item" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
-                                        <li class="collection-item" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
-                                        <li class="collection-item" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
-                                    </ol>
-                                </div>
-                            </div> -->
                         <form name="post">
                             <div id="attribute_attachment_section" class="postbox">
                                 <div class="inside">
@@ -94,8 +59,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script> -->
         <script>
             $.fn.extend({
                 getMaxHeight: function () {
@@ -124,14 +87,40 @@
                 }
             });
 
+            function fuggggme() {
+                var link = "https://animedoubleplay.github.io/?ids=";
+                // console.log($("#assigned_attributes").children);
+                for(var i = 0; i < $("#assigned_attributes")[0].children.length; i++) {
+                    console.log(i);
+                    if(i == $("#assigned_attributes")[0].children.length - 1) {
+                        link += $("#assigned_attributes")[0].children[i].id;
+                    }
+                    else {
+                        link += $("#assigned_attributes")[0].children[i].id + "+";
+                    }
+                }
+                $("#linkplace").val(link);
+                console.log(link);
+            }
+
             $(document).ready(function() {
                 var client = new XMLHttpRequest();
+                var done = 0;
                 client.open('GET', 'https://raw.githubusercontent.com/animedoubleplay/animedoubleplay.github.io/master/animes.txt');
                 client.onreadystatechange = function() {
-                    for(var i = 1; i < client.responseText.split("\n").length; i++) {
-                        // console.log(client.responseText.split("\n")[i]);
-                        $("#unassigned_attributes").append("<a class=\"\" id=\"" + i + "\"><br />" + client.responseText.split("\n")[i] + "<\a>");
+                    if(done == 1) {
+                        for(var i = 1; i < client.responseText.split("\n").length; i++) {
+                            $("#unassigned_attributes").append("<a class=\"\" id=\"" + i + "\"><br />" + client.responseText.split("\n")[i] + "<\a>");
+                        }
+
+                        console.log(window.location.search.substr(1).split("=")[1].split("+"));
+                        for(var j = 0; j < window.location.search.substr(1).split("=")[1].split("+").length; j++) {
+                            var a = $("#" + window.location.search.substr(1).split("=")[1].split("+")[j]);
+                            $("#" + window.location.search.substr(1).split("=")[1].split("+")[j]).remove();
+                            $("#assigned_attributes").append(a);
+                        }
                     }
+                    done += 1;
                 }
                 client.send();
             });
