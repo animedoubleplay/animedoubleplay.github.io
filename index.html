@@ -4,7 +4,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <style>
+        <!-- <style>
             #div1 {
                 float: left;
                 width: 170px;
@@ -13,43 +13,22 @@
                 padding: 10px;
                 border: 1px solid #aaaaaa;
             }
-            #div2, #div3, #div4, #div5, #div6 {
-                float: left;
-                width: 320px;
-                height: 188px;
-                margin: 10px;
-                padding: 10px;
-                border-bottom: 1px solid #aaaaaa;
-            }
 
-            .unlisted > img {
+            .unlisted img {
                 width: 150px;
                 height: 84px;
                 cursor: move;
             }
 
-            .listed > img {
+            .listed img {
                 width: 300px;
                 height: 168px;
                 cursor: move;
             }
-        </style>
-        <script>
-            function allowDrop(ev) {
-                ev.preventDefault();
-            }
-
-            function drag(ev) {
-                ev.dataTransfer.setData("text", ev.target.id);
-            }
-
-            function drop(ev) {
-                ev.preventDefault();
-                var data = ev.dataTransfer.getData("text");
-                ev.target.appendChild(document.getElementById(data));
-            }
-        </script>
+        </style> -->
+        
     </head>
+
     <body>
         <div class="container">
             <div class="row">
@@ -57,28 +36,108 @@
                     <h2 class="center-align">Hottest Top 10 2018 Anime List Maker</h2>
                     <div class="divider"></div>
                     <div class="section">
-                        <div class="row">
-                            <div class="col s6">
-                                <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img id="drag1" src="slime.jpg" draggable="true" ondragstart="drag(event)">
+                        <!-- <div class="row">
+                                <div class="col s6">
+                                    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" class="unlisted">
+                                        <img id="drag1" src="slime.jpg" draggable="true" ondragstart="drag(event)">
+                                    </div>
+                                </div>
+                                <div class="col s6">
+                                    <ul class="collection">
+                                        <li class="collection-item" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
+                                        <li class="collection-item" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
+                                        <li class="collection-item" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
+                                        <li class="collection-item" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
+                                        <li class="collection-item" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></li>
+                                    </ol>
+                                </div>
+                            </div> -->
+                        <form name="post">
+                            <div id="attribute_attachment_section" class="postbox">
+                                <h2 align="center">
+                                    <span>Drag & Drop Demo</span>
+                                </h2>
+                                <div class="inside">
+                                    <table id="tblAttachAttributes" class="postbox">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 500px;">
+                                                    NOT SELECTED
+                                                </th>
+                                                <th style="border-left: #ccc 1px double; width: 500px;">
+                                                    TOP TEN OF THE GODS
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 500px;">
+                                                    <div class="row">
+                                                        <div id="unassigned_attributes" class="col s6 sortable">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 500px;">
+                                                    <div class="row">
+                                                        <div id="assigned_attributes" class="col s6 sortable">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="col s6">
-                                <!-- <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div> -->
-                                <ol>
-                                    <li><div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
-                                    <li><div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
-                                    <li><div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
-                                    <li><div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
-                                    <li><div id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
-                                </ol>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script> -->
+        <script>
+            $.fn.extend({
+                getMaxHeight: function () {
+                    var maxHeight = -1;
+                    this.each(function () {
+                        var height = $(this).height();
+                        maxHeight = maxHeight > height ? maxHeight : height;
+                    });
+                    return maxHeight;
+                }
+            });
+
+            function setMenusDivHeight($attributeDivs) {
+                return $attributeDivs.css('min-height', $attributeDivs.getMaxHeight());
+            }
+
+            setMenusDivHeight($('table#tblAttachAttributes').find('div.sortable')).sortable({
+                connectWith: 'div.sortable',
+                start: function (event, ui) {
+                    setMenusDivHeight(ui.item.closest('table#tblAttachAttributes').find('div.sortable'))
+                        .css('box-shadow', '0 0 10px blue');
+                },
+                stop: function (event, ui) {
+                    setMenusDivHeight(ui.item.closest('table#tblAttachAttributes').find('div.sortable'))
+                        .css('box-shadow', '');
+                }
+            });
+
+            $(document).ready(function() {
+                var client = new XMLHttpRequest();
+                client.open('GET', 'https://raw.githubusercontent.com/animedoubleplay/animedoubleplay.github.io/master/animes.txt');
+                client.onreadystatechange = function() {
+                    for(var i = 1; i < client.responseText.split("\n").length; i++) {
+                        // console.log(client.responseText.split("\n")[i]);
+                        $("#unassigned_attributes").append("<a class=\"\" id=\"" + i + "\"><br />" + client.responseText.split("\n")[i] + "<\a>");
+                    }
+                }
+                client.send();
+            });
+        </script>
     </body>
 </html>
