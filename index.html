@@ -7,8 +7,8 @@
         <style>
             #div1 {
                 float: left;
-                width: 320px;
-                height: 188px;
+                width: 170px;
+                height: 104px;
                 margin: 10px;
                 padding: 10px;
                 border: 1px solid #aaaaaa;
@@ -20,6 +20,18 @@
                 margin: 10px;
                 padding: 10px;
                 border-bottom: 1px solid #aaaaaa;
+            }
+
+            .unlisted > img {
+                width: 150px;
+                height: 84px;
+                cursor: move;
+            }
+
+            .listed > img {
+                width: 300px;
+                height: 168px;
+                cursor: move;
             }
         </style>
         <script>
@@ -54,11 +66,11 @@
                             <div class="col s6">
                                 <!-- <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div> -->
                                 <ol>
-                                    <li><div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div></li>
-                                    <li><div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div></li>
-                                    <li><div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"></div></li>
-                                    <li><div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)"></div></li>
-                                    <li><div id="div6" ondrop="drop(event)" ondragover="allowDrop(event)"></div></li>
+                                    <li><div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
+                                    <li><div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
+                                    <li><div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
+                                    <li><div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
+                                    <li><div id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" class="listed"></div></li>
                                 </ol>
                             </div>
                         </div>
