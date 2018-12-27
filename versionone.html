@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="center-align">
+                        <h2>Hottest Top 10 2018 Anime List Maker</h2>
+                        <input type="button" value="Gen Link" onclick="fuggggme()" /><input id="linkplace" type="text" /> 
+                    </div>
+                    
+                    <div class="divider"></div>
+                    <div class="section">
+                        <form name="post">
+                            <div id="attribute_attachment_section" class="postbox">
+                                <div class="inside">
+                                    <table id="tblAttachAttributes" class="postbox">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 500px;">
+                                                    NOT SELECTED
+                                                </th>
+                                                <th style="border-left: #ccc 1px double; width: 500px;">
+                                                    TOP TEN OF THE GODS
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 500px;">
+                                                    <div class="row">
+                                                        <div id="unassigned_attributes" class="col s6 sortable">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 500px;">
+                                                    <div class="row">
+                                                        <div id="assigned_attributes" class="col s6 sortable">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+            $.fn.extend({
+                getMaxHeight: function () {
+                    var maxHeight = -1;
+                    this.each(function () {
+                        var height = $(this).height();
+                        maxHeight = maxHeight > height ? maxHeight : height;
+                    });
+                    return maxHeight;
+                }
+            });
+
+            function setMenusDivHeight($attributeDivs) {
+                return $attributeDivs.css('min-height', $attributeDivs.getMaxHeight());
+            }
+
+            setMenusDivHeight($('table#tblAttachAttributes').find('div.sortable')).sortable({
+                connectWith: 'div.sortable',
+                start: function (event, ui) {
+                    setMenusDivHeight(ui.item.closest('table#tblAttachAttributes').find('div.sortable'))
+                        .css('box-shadow', '0 0 10px blue');
+                },
+                stop: function (event, ui) {
+                    setMenusDivHeight(ui.item.closest('table#tblAttachAttributes').find('div.sortable'))
+                        .css('box-shadow', '');
+                }
+            });
+
+            function fuggggme() {
+                var link = "https://animedoubleplay.github.io/?ids=";
+                // console.log($("#assigned_attributes").children);
+                for(var i = 0; i < $("#assigned_attributes")[0].children.length; i++) {
+                    console.log(i);
+                    if(i == $("#assigned_attributes")[0].children.length - 1) {
+                        link += $("#assigned_attributes")[0].children[i].id;
+                    }
+                    else {
+                        link += $("#assigned_attributes")[0].children[i].id + "+";
+                    }
+                }
+                $("#linkplace").val(link);
+                console.log(link);
+            }
+
+            $(document).ready(function() {
+                var client = new XMLHttpRequest();
+                var done = 0;
+                client.open('GET', 'https://raw.githubusercontent.com/animedoubleplay/animedoubleplay.github.io/master/animes.txt');
+                client.onreadystatechange = function() {
+                    if(done == 1) {
+                        for(var i = 1; i < client.responseText.split("\n").length; i++) {
+                            $("#unassigned_attributes").append("<a class=\"\" id=\"" + i + "\"><br />" + client.responseText.split("\n")[i] + "<\a>");
+                        }
+
+                        console.log(window.location.search.substr(1).split("=")[1].split("+"));
+                        for(var j = 0; j < window.location.search.substr(1).split("=")[1].split("+").length; j++) {
+                            var a = $("#" + window.location.search.substr(1).split("=")[1].split("+")[j]);
+                            $("#" + window.location.search.substr(1).split("=")[1].split("+")[j]).remove();
+                            $("#assigned_attributes").append(a);
+                        }
+                    }
+                    done += 1;
+                }
+                client.send();
+            });
+        </script>
+    </body>
+</html>
