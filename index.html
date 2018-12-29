@@ -4,6 +4,38 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            .collection-item:hover {
+                background-color: #dddddd !important;
+            }
+
+            .collection-item {
+                cursor: pointer;
+            }
+
+            .listed {
+                cursor: ns-resize !important;
+            }
+
+            .remove {
+                border-style: none !important;
+                border-radius: 2px !important;
+                border-color: rgb(255, 255, 255) !important;
+                background-color: #26a69a !important;
+                color: white !important;
+                outline-style: none !important;
+                cursor: pointer !important;
+                box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;
+                text-decoration: none !important;
+                padding-top: 3px;
+                padding-bottom: 4px;
+                margin-right: 5px;
+            }
+
+            .remove:hover {
+                background-color: #2bbbad !important;
+            }
+        </style>
     </head>
     <body class="brown lighten-4 z-depth-3">
         <div class="container white">
@@ -13,10 +45,10 @@
                         <div id="holder" style="display: block;">
                             <div class="center-align">
                                 <h4>THE BEST TOP 10 ANIME OF 2018 LIST</h4>
-                                <input type="button" value="Gen Your Link" class="btn" onclick="fuggggme();" />
+                                <input type="button" value="Gen Your Link" class="btn linkstuff" onclick="fuggggme();" />
                                 <div class="row">
                                     <div class="col s6 offset-s3">
-                                        <input type="text" id="linkplace" class="center-align" />
+                                        <input type="text" id="linkplace" class="center-align linkstuff" />
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +80,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script>
-            $(document).on('click', 'input', function(e) {
+            $(document).on('click', 'input:not(.linkstuff)', function(e) {
                 removeFromList(e.currentTarget);
                 // console.log(e);
             });
@@ -76,7 +108,8 @@
                 var listElement = $("<li></li>")[0];
                 listElement.id = id;
                 listElement.classList.add("collection-item");
-                var buttonElement = $("<input type=\"button\" value=\"X\" />")[0];
+                listElement.classList.add("listed");
+                var buttonElement = $("<input type=\"button\" class=\"remove\" value=\"X\" />")[0];
                 listElement.append(buttonElement);
                 listElement.innerHTML = listElement.innerHTML + " " + text;
                 return listElement;
@@ -131,34 +164,6 @@
                     $("#empty")[0].style.display = "block";
                 }
             }
-
-            // function runThis(e) {
-            //     var numListed = $("#listed")[0].children.length;
-            //     if(e.parentNode == $("#unlisted")[0]) {
-            //         var a = e;
-            //         a.innerHTML = "<a onclick=\"rungay(this);\">x</a>" + (numListed + 1) + ". " + a.innerHTML;
-            //         a.onclick = "";
-            //         e.remove();
-            //         $("#listed").append(a);
-            //         $("#listed")[0].style.display = "block";
-            //         $("#empty")[0].style.display = "none";
-            //     }
-            //     else if(e.parentNode == $("#listed")[0]) {
-            //         var loc;
-            //         for(var i = 0; i < $("#listed")[0].children; i++) {
-            //             if($("#listed")[0].children[i] == e) loc = i + 1;
-            //         }
-            //         var a = e;
-            //         if(loc >= 10) a.innerHTML = a.innerHTML.substring(4);
-            //         else a.innerHTML = a.innerHTML.substring(3);
-            //         e.remove();
-            //         $("#unlisted").append(a);
-            //         if(numListed == 1) {
-            //             $("#listed")[0].style.display = "none";
-            //             $("#empty")[0].style.display = "block";
-            //         }
-            //     }
-            // }
 
             $(function() {
                 $("#listed").sortable();
