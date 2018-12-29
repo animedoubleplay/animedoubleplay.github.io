@@ -5,8 +5,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
-    <body>
-        <div class="container">
+    <body class="brown lighten-4 z-depth-3">
+        <div class="container white">
             <div class="row">
                 <div class="col s12">
                     <div class="row">
@@ -14,18 +14,22 @@
                             <div class="center-align">
                                 <h4>THE BEST TOP 10 ANIME OF 2018 LIST</h4>
                                 <input type="button" value="Gen Your Link" class="btn" onclick="fuggggme();" />
-                                <input type="text" id="linkplace" />
+                                <div class="row">
+                                    <div class="col s6 offset-s3">
+                                        <input type="text" id="linkplace" class="center-align" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="divider"></div>
                             <div class="col s6">
-                                <div class="collection" id="unlisted">
-                                </div>
+                                <ul class="collection" id="unlisted">
+                                </ul>
                             </div>
                             <div class="col s6">
-                                <div class="collection" id="listed" style="display: none;">
-                                </div>
+                                <ul class="collection" id="listed" style="display: none;">
+                                </ul>
                                 <div id="empty" style="display: block; border-radius: 2px; border: 0.8px #e0e0e0 solid; margin-top: 7.5px;">
-                                    <div class="center-align" style="font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">Looks like you have no entries!  Why not add some!</div>
+                                    <div class="center-align" style="font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">Looks like you have no entries!  Why not add some?</div>
                                 </div>
                             </div>
                         </div>
@@ -44,6 +48,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script>
+            $(document).on('click', 'input', function(e) {
+                removeFromList(e.currentTarget);
+                // console.log(e);
+            });
+
             function fuggggme() {
                 var link = "https://animedoubleplay.github.io/?ids=";
                 for(var i = 0; i < $("#listed")[0].children.length; i++) {
@@ -57,33 +66,104 @@
                 $("#linkplace").val(link);
             }
 
-            function runThis(e) {
-                var numListed = $("#listed")[0].children.length;
-                if(e.parentNode == $("#unlisted")[0]) {
-                    // if(numListed == 0) 
-                    var a = e;
-                    a.innerHTML = (numListed + 1) + ". " + a.innerHTML;
-                    e.remove();
-                    $("#listed").append(a);
-                    $("#listed")[0].style.display = "block";
+            function getNumListedEntries() {
+                return $("#listed")[0].children.length;
+            }
+
+            function generateListedEntry(e) {
+                var id = e.id;
+                var text = e.innerHTML;
+                var listElement = $("<li></li>")[0];
+                listElement.id = id;
+                listElement.classList.add("collection-item");
+                var buttonElement = $("<input type=\"button\" value=\"X\" />")[0];
+                listElement.append(buttonElement);
+                listElement.innerHTML = listElement.innerHTML + " " + text;
+                return listElement;
+            }
+
+            function hideOriginalElement(e) {
+                $("#" + e.id)[0].style.display = "none";
+            }
+
+            function showOriginalElement(id) {
+                $("#" + id)[0].style.display = "block";
+            }
+
+            function moveToList(e) {
+                var entry = generateListedEntry(e);
+                $("#listed").append(entry);
+
+                if(getNumListedEntries() > 0) {
                     $("#empty")[0].style.display = "none";
+                    $("#listed")[0].style.display = "block";
                 }
-                else if(e.parentNode == $("#listed")[0]) {
-                    var loc;
-                    for(var i = 0; i < $("#listed")[0].children; i++) {
-                        if($("#listed")[0].children[i] == e) loc = i + 1;
-                    }
-                    var a = e;
-                    if(loc >= 10) a.innerHTML = a.innerHTML.substring(4);
-                    else a.innerHTML = a.innerHTML.substring(3);
-                    e.remove();
-                    $("#unlisted").append(a);
-                    if(numListed == 1) {
-                        $("#listed")[0].style.display = "none";
-                        $("#empty")[0].style.display = "block";
-                    }
+
+                hideOriginalElement(e);
+            }
+
+            function removeFromList(e) {
+                var id = e.parentNode.id;
+                e.parentNode.remove();
+                $("#" + id)[0].style.display = "block";
+                if(getNumListedEntries() == 0) {
+                    $("#listed")[0].style.display = "none";
+                    $("#empty")[0].style.display = "block";
                 }
             }
+
+            function moveFromList(e) {
+                var numListed = $("#listed")[0].children.length;
+                var loc;
+                for(var i = 0; i < $("#listed")[0].children; i++) {
+                    if($("#listed")[0].children[i].children[1].innerHTML == e.parentNode.children[1].innerHTML) loc = i + 1;
+                }
+                var inner = e.parentNode.children[1];
+                var a = e.parentNode;
+                a.classList.add("center-align");
+                a.innerHTML = inner.innerHTML;
+                a.attr("onclick","moveToList(this);");
+                console.log(a);
+                e.remove();
+                $("#unlisted").append(a);
+                if(numListed == 1) {
+                    $("#listed")[0].style.display = "none";
+                    $("#empty")[0].style.display = "block";
+                }
+            }
+
+            // function runThis(e) {
+            //     var numListed = $("#listed")[0].children.length;
+            //     if(e.parentNode == $("#unlisted")[0]) {
+            //         var a = e;
+            //         a.innerHTML = "<a onclick=\"rungay(this);\">x</a>" + (numListed + 1) + ". " + a.innerHTML;
+            //         a.onclick = "";
+            //         e.remove();
+            //         $("#listed").append(a);
+            //         $("#listed")[0].style.display = "block";
+            //         $("#empty")[0].style.display = "none";
+            //     }
+            //     else if(e.parentNode == $("#listed")[0]) {
+            //         var loc;
+            //         for(var i = 0; i < $("#listed")[0].children; i++) {
+            //             if($("#listed")[0].children[i] == e) loc = i + 1;
+            //         }
+            //         var a = e;
+            //         if(loc >= 10) a.innerHTML = a.innerHTML.substring(4);
+            //         else a.innerHTML = a.innerHTML.substring(3);
+            //         e.remove();
+            //         $("#unlisted").append(a);
+            //         if(numListed == 1) {
+            //             $("#listed")[0].style.display = "none";
+            //             $("#empty")[0].style.display = "block";
+            //         }
+            //     }
+            // }
+
+            $(function() {
+                $("#listed").sortable();
+                $("#listed").disableSelection();
+            });
 
             $(document).ready(function() {
                 var client = new XMLHttpRequest();
@@ -92,7 +172,7 @@
                 client.onreadystatechange = function() {
                     if(done == 1) {
                         for(var i = 0; i < client.responseText.split("\n").length; i++) {
-                            $("#unlisted").append("<a id=\"" + i + "\" class=\"collection-item\" onclick=\"runThis(this);\">" + client.responseText.split("\n")[i] + "</a>");
+                            $("#unlisted").append("<li id=\"" + i + "\" class=\"collection-item center-align\" onclick=\"moveToList(this);\">" + client.responseText.split("\n")[i] + "</li>");
                         }
 
                         if(window.location.search) {
@@ -100,7 +180,7 @@
                             $("#finalList")[0].style.display = "block";
                             for(var j = 0; j < window.location.search.substr(1).split("=")[1].split("+").length; j++) {
                                 var a = $("#" + window.location.search.substr(1).split("=")[1].split("+")[j]);
-                                var finala = "<a class=\"collection-item black-text\">" + (j + 1) + ". " + a[0].innerHTML + "</a>";
+                                var finala = "<li class=\"collection-item black-text\">" + (j + 1) + ". " + a[0].innerHTML + "</li>";
                                 $("#listed2").append(finala);
                             }
                         }
