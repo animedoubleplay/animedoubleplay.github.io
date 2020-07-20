@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            .collection-item:hover {
+                background-color: #dddddd !important;
+            }
+
+            .collection-item {
+                cursor: pointer;
+            }
+
+            .listed {
+                cursor: ns-resize !important;
+            }
+
+            .remove {
+                border-style: none !important;
+                border-radius: 2px !important;
+                border-color: rgb(255, 255, 255) !important;
+                background-color: #26a69a !important;
+                color: white !important;
+                outline-style: none !important;
+                cursor: pointer !important;
+                box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;
+                text-decoration: none !important;
+                padding-top: 3px;
+                padding-bottom: 4px;
+                margin-right: 5px;
+            }
+
+            .remove:hover {
+                background-color: #2bbbad !important;
+            }
+        </style>
+    </head>
+    <body class="brown lighten-4 z-depth-3">
+        <div class="container white">
+            <div class="row">
+                <div class="col s12">
+                    <div class="row">
+                        <div id="holder" style="display: block;">
+                            <div class="center-align">
+                                <h4>THE BEST TOP 10 ANIME OF 2018 LIST</h4>
+                                <input type="button" value="Gen Your Link" class="btn linkstuff" onclick="fuggggme();" />
+                                <div class="row">
+                                    <div class="col s6 offset-s3">
+                                        <input type="text" id="linkplace" class="center-align linkstuff" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="col s6">
+                                <ul class="collection" id="unlisted">
+                                </ul>
+                            </div>
+                            <div class="col s6">
+                                <ul class="collection" id="listed" style="display: none;">
+                                </ul>
+                                <div id="empty" style="display: block; border-radius: 2px; border: 0.8px #e0e0e0 solid; margin-top: 7.5px;">
+                                    <div class="center-align" style="font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">Looks like you have no entries!  Why not add some?</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="finalList" style="display: none;">
+                            <h4 class="center-align">THE BEST TOP 10 ANIME OF 2018 LIST</h4>
+                            <h4 class="center-align">IS HERE AND THIS IS WHAT IT IS</h4>
+                            <div class="collection" id="listed2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+            $(document).on('click', 'input:not(.linkstuff)', function(e) {
+                removeFromList(e.currentTarget);
+                // console.log(e);
+            });
+
+            function fuggggme() {
+                var link = "https://animedoubleplay.github.io/?ids=";
+                for(var i = 0; i < $("#listed")[0].children.length; i++) {
+                    if(i == $("#listed")[0].children.length - 1) {
+                        link += $("#listed")[0].children[i].id;
+                    }
+                    else {
+                        link += $("#listed")[0].children[i].id + "+";
+                    }
+                }
+                $("#linkplace").val(link);
+            }
+
+            function getNumListedEntries() {
+                return $("#listed")[0].children.length;
+            }
+
+            function generateListedEntry(e) {
+                var id = e.id;
+                var text = e.innerHTML;
+                var listElement = $("<li></li>")[0];
+                listElement.id = id;
+                listElement.classList.add("collection-item");
+                listElement.classList.add("listed");
+                var buttonElement = $("<input type=\"button\" class=\"remove\" value=\"X\" />")[0];
+                listElement.append(buttonElement);
+                listElement.innerHTML = listElement.innerHTML + " " + text;
+                return listElement;
+            }
+
+            function hideOriginalElement(e) {
+                $("#" + e.id)[0].style.display = "none";
+            }
+
+            function showOriginalElement(id) {
+                $("#" + id)[0].style.display = "block";
+            }
+
+            function moveToList(e) {
+                var entry = generateListedEntry(e);
+                $("#listed").append(entry);
+
+                if(getNumListedEntries() > 0) {
+                    $("#empty")[0].style.display = "none";
+                    $("#listed")[0].style.display = "block";
+                }
+
+                hideOriginalElement(e);
+            }
+
+            function removeFromList(e) {
+                var id = e.parentNode.id;
+                e.parentNode.remove();
+                $("#" + id)[0].style.display = "block";
+                if(getNumListedEntries() == 0) {
+                    $("#listed")[0].style.display = "none";
+                    $("#empty")[0].style.display = "block";
+                }
+            }
+
+            function moveFromList(e) {
+                var numListed = $("#listed")[0].children.length;
+                var loc;
+                for(var i = 0; i < $("#listed")[0].children; i++) {
+                    if($("#listed")[0].children[i].children[1].innerHTML == e.parentNode.children[1].innerHTML) loc = i + 1;
+                }
+                var inner = e.parentNode.children[1];
+                var a = e.parentNode;
+                a.classList.add("center-align");
+                a.innerHTML = inner.innerHTML;
+                a.attr("onclick","moveToList(this);");
+                console.log(a);
+                e.remove();
+                $("#unlisted").append(a);
+                if(numListed == 1) {
+                    $("#listed")[0].style.display = "none";
+                    $("#empty")[0].style.display = "block";
+                }
+            }
+
+            $(function() {
+                $("#listed").sortable();
+                $("#listed").disableSelection();
+            });
+
+            $(document).ready(function() {
+                var client = new XMLHttpRequest();
+                var done = 0;
+                client.open('GET', 'https://raw.githubusercontent.com/animedoubleplay/animedoubleplay.github.io/master/animes.txt');
+                client.onreadystatechange = function() {
+                    if(done == 1) {
+                        for(var i = 0; i < client.responseText.split("\n").length; i++) {
+                            $("#unlisted").append("<li id=\"" + i + "\" class=\"collection-item center-align\" onclick=\"moveToList(this);\">" + client.responseText.split("\n")[i] + "</li>");
+                        }
+
+                        if(window.location.search) {
+                            $("#holder")[0].style.display = "none";
+                            $("#finalList")[0].style.display = "block";
+                            for(var j = 0; j < window.location.search.substr(1).split("=")[1].split("+").length; j++) {
+                                var a = $("#" + window.location.search.substr(1).split("=")[1].split("+")[j]);
+                                var finala = "<li class=\"collection-item black-text\">" + (j + 1) + ". " + a[0].innerHTML + "</li>";
+                                $("#listed2").append(finala);
+                            }
+                        }
+                    }
+                    done += 1;
+                }
+                client.send();
+            });
+        </script>
+    </body>
+</html>

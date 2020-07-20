@@ -1,199 +1,149 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
     <head>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Asap:400,700|Open+Sans:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
-            .collection-item:hover {
-                background-color: #dddddd !important;
+            body, html {
+                font-family: Asap, Arial, Helvetica, sans-serif;
+            }
+            
+            body {
+                background-color: #d7d7e0 !important;
             }
 
-            .collection-item {
-                cursor: pointer;
+            .index {
+                width: auto !important;
+                margin-top: 0.8rem;
             }
 
-            .listed {
-                cursor: ns-resize !important;
+            .poster {
+                margin-top: 1.52rem;
             }
 
-            .remove {
-                border-style: none !important;
-                border-radius: 2px !important;
-                border-color: rgb(255, 255, 255) !important;
-                background-color: #26a69a !important;
-                color: white !important;
-                outline-style: none !important;
-                cursor: pointer !important;
-                box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;
-                text-decoration: none !important;
-                padding-top: 3px;
-                padding-bottom: 4px;
-                margin-right: 5px;
+            .rating {
+                margin-top: 0.75rem;
+                margin-right: 0.75rem;
+                width: auto !important;
+                border: 2px solid #667196; color: #667196;
+            }
+        
+            .hero-image {
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("headerbg.png");
+                height: 350px;
+                background-position-x: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
             }
 
-            .remove:hover {
-                background-color: #2bbbad !important;
+            .hero-text {
+                text-align: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+            }
+            
+            .entry-list {
+                margin-top: 3%;
+            }
+
+            .entry-row {
+                background-color: #f1f1f4;
+                font-size: 2em;
             }
         </style>
     </head>
-    <body class="brown lighten-4 z-depth-3">
-        <div class="container white">
-            <div class="row">
-                <div class="col s12">
-                    <div class="row">
-                        <div id="holder" style="display: block;">
-                            <div class="center-align">
-                                <h4>THE BEST TOP 10 ANIME OF 2018 LIST</h4>
-                                <input type="button" value="Gen Your Link" class="btn linkstuff" onclick="fuggggme();" />
-                                <div class="row">
-                                    <div class="col s6 offset-s3">
-                                        <input type="text" id="linkplace" class="center-align linkstuff" />
-                                    </div>
-                                </div>
+    <body>
+        <header>
+            <div class="hero-image">
+                <div class="hero-text">
+                    <h1>Seasonal Sorter</h1>
+                    <h5><i>seasonal anime list maker</i></h5>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="row entry-list">
+                    <div class="col s12" id="seasonal-list">
+                        <!-- <div class="row z-depth-3 entry-row">
+                            <div class="col s1 index">1.</div>
+                            <div class="col s2 poster"><img src="https://media.kitsu.io/anime/poster_images/43025/original.jpg?1582948428" class="responsive-img" /></div>
+                            <div class="col s7">
+                                <div class="row"><h4>Pokemon Movie 23: Coco</h4></div>
+                                <div class="row"><h5>Gekijouban Pocket Monsters: Coco</h5></div>
+                                <div class="row"><h5>劇場版ポケットモンスター ココ</h5></div>
                             </div>
-                            <div class="divider"></div>
-                            <div class="col s6">
-                                <ul class="collection" id="unlisted">
-                                </ul>
-                            </div>
-                            <div class="col s6">
-                                <ul class="collection" id="listed" style="display: none;">
-                                </ul>
-                                <div id="empty" style="display: block; border-radius: 2px; border: 0.8px #e0e0e0 solid; margin-top: 7.5px;">
-                                    <div class="center-align" style="font-weight: bold; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">Looks like you have no entries!  Why not add some?</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="finalList" style="display: none;">
-                            <h4 class="center-align">THE BEST TOP 10 ANIME OF 2018 LIST</h4>
-                            <h4 class="center-align">IS HERE AND THIS IS WHAT IT IS</h4>
-                            <div class="collection" id="listed2">
-                            </div>
-                        </div>
+                            <div class="col s2 right rating">N/A</div>
+                        </div> -->
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
+        <footer>
 
+        </footer>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script>
-            $(document).on('click', 'input:not(.linkstuff)', function(e) {
-                removeFromList(e.currentTarget);
-                // console.log(e);
+            $(document).ready(async () => {
+                var jsonAnimeData = await preloadAnime();
+                jsonAnimeData.data.forEach((currAnime, index) => {
+                    var poster = currAnime.attributes.posterImage.original;
+                    var titles = currAnime.attributes.titles;
+                    var rating = Math.round(currAnime.attributes.averageRating) * 0.1 || "N/A";
+                    
+                    var $listRoot = $("#seasonal-list");
+                    
+                    var $entryRow = $("<div>", {"class": "row z-depth-3 entry-row"});
+                    var $index = $("<div>", {"class": "col s1 index"});
+                    $index.text((index + 1) + ".");
+                    $entryRow.append($index);
+                    
+                    var $posterDiv = $("<div>", {"class": "col s2 poster"});
+                    var $posterImg = $("<img>", {"class": "responsive-img", "src": poster});
+                    $posterDiv.append($posterImg);
+                    $entryRow.append($posterDiv);
+
+                    var $titlesDiv = $("<div>", {"class": "col s7"});
+                    var $enTitleDiv = $("<div>", {"class": "row"});
+                    var $enTitle = $("<h4>");
+                    $enTitle.text(titles.en);
+                    $enTitleDiv.append($enTitle);
+                    $titlesDiv.append($enTitleDiv);
+                    var $en_jpTitleDiv = $("<div>", {"class": "row"});
+                    var $en_jpTitle = $("<h5>");
+                    $en_jpTitle.text(titles.en_jp);
+                    $en_jpTitleDiv.append($en_jpTitle);
+                    $titlesDiv.append($en_jpTitleDiv);
+                    var $ja_jpTitleDiv = $("<div>", {"class": "row"});
+                    var $ja_jpTitle = $("<h5>");
+                    $ja_jpTitle.text(titles.ja_jp);
+                    $ja_jpTitleDiv.append($ja_jpTitle);
+                    $titlesDiv.append($ja_jpTitleDiv);
+                    $entryRow.append($titlesDiv);
+
+                    var $rating = $("<div>", {"class": "col s2 right rating"});
+                    $rating.text(rating);
+                    $entryRow.append($rating);
+
+                    $listRoot.append($entryRow);
+                });
+                // console.log(jsonAnimeData);
             });
 
-            function fuggggme() {
-                var link = "https://animedoubleplay.github.io/?ids=";
-                for(var i = 0; i < $("#listed")[0].children.length; i++) {
-                    if(i == $("#listed")[0].children.length - 1) {
-                        link += $("#listed")[0].children[i].id;
-                    }
-                    else {
-                        link += $("#listed")[0].children[i].id + "+";
-                    }
-                }
-                $("#linkplace").val(link);
+            var preloadAnime = async () => {
+                var rawData = await fetch("https://kitsu.io/api/edge/anime?filter%5Bseason%5D=summer&filter%5BseasonYear%5D=2020&fields%5Banime%5D=titles%2CposterImage%2CaverageRating");
+                return rawData.json();
             }
-
-            function getNumListedEntries() {
-                return $("#listed")[0].children.length;
-            }
-
-            function generateListedEntry(e) {
-                var id = e.id;
-                var text = e.innerHTML;
-                var listElement = $("<li></li>")[0];
-                listElement.id = id;
-                listElement.classList.add("collection-item");
-                listElement.classList.add("listed");
-                var buttonElement = $("<input type=\"button\" class=\"remove\" value=\"X\" />")[0];
-                listElement.append(buttonElement);
-                listElement.innerHTML = listElement.innerHTML + " " + text;
-                return listElement;
-            }
-
-            function hideOriginalElement(e) {
-                $("#" + e.id)[0].style.display = "none";
-            }
-
-            function showOriginalElement(id) {
-                $("#" + id)[0].style.display = "block";
-            }
-
-            function moveToList(e) {
-                var entry = generateListedEntry(e);
-                $("#listed").append(entry);
-
-                if(getNumListedEntries() > 0) {
-                    $("#empty")[0].style.display = "none";
-                    $("#listed")[0].style.display = "block";
-                }
-
-                hideOriginalElement(e);
-            }
-
-            function removeFromList(e) {
-                var id = e.parentNode.id;
-                e.parentNode.remove();
-                $("#" + id)[0].style.display = "block";
-                if(getNumListedEntries() == 0) {
-                    $("#listed")[0].style.display = "none";
-                    $("#empty")[0].style.display = "block";
-                }
-            }
-
-            function moveFromList(e) {
-                var numListed = $("#listed")[0].children.length;
-                var loc;
-                for(var i = 0; i < $("#listed")[0].children; i++) {
-                    if($("#listed")[0].children[i].children[1].innerHTML == e.parentNode.children[1].innerHTML) loc = i + 1;
-                }
-                var inner = e.parentNode.children[1];
-                var a = e.parentNode;
-                a.classList.add("center-align");
-                a.innerHTML = inner.innerHTML;
-                a.attr("onclick","moveToList(this);");
-                console.log(a);
-                e.remove();
-                $("#unlisted").append(a);
-                if(numListed == 1) {
-                    $("#listed")[0].style.display = "none";
-                    $("#empty")[0].style.display = "block";
-                }
-            }
-
-            $(function() {
-                $("#listed").sortable();
-                $("#listed").disableSelection();
-            });
-
-            $(document).ready(function() {
-                var client = new XMLHttpRequest();
-                var done = 0;
-                client.open('GET', 'https://raw.githubusercontent.com/animedoubleplay/animedoubleplay.github.io/master/animes.txt');
-                client.onreadystatechange = function() {
-                    if(done == 1) {
-                        for(var i = 0; i < client.responseText.split("\n").length; i++) {
-                            $("#unlisted").append("<li id=\"" + i + "\" class=\"collection-item center-align\" onclick=\"moveToList(this);\">" + client.responseText.split("\n")[i] + "</li>");
-                        }
-
-                        if(window.location.search) {
-                            $("#holder")[0].style.display = "none";
-                            $("#finalList")[0].style.display = "block";
-                            for(var j = 0; j < window.location.search.substr(1).split("=")[1].split("+").length; j++) {
-                                var a = $("#" + window.location.search.substr(1).split("=")[1].split("+")[j]);
-                                var finala = "<li class=\"collection-item black-text\">" + (j + 1) + ". " + a[0].innerHTML + "</li>";
-                                $("#listed2").append(finala);
-                            }
-                        }
-                    }
-                    done += 1;
-                }
-                client.send();
-            });
         </script>
     </body>
 </html>
